@@ -3,9 +3,11 @@
 - based on accelerate==1.10.1, collecting llm model based on its config
 - auto pipe to generate csv file
 ```
-,model_name,dtype,largest_layer(GB),infer_model(GB),train_model(GB),train_optimizer(GB),train_gradients(GB),train_step(GB)
-0,unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit,float32,1.95703125,27.95802330970764,27.95802330970764,55.91604661941528,27.95802330970764,111.83209323883057
-1,unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit,float16,0.978515625,13.97901165485382,27.95802330970764,55.91604661941528,41.93703496456146,55.91604661941528
+,model_name,dtype,Largest layer Size(GB),Infer Model Size(GB),Train Ideal Peak Size with Adam(GB),Train Total Size w/o Offload(GB),Train Model Size(GB),Train Gradients(GB),Train Backward Optimizer(GB),Train Optimizer Step(GB)
+0,unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit,float32,1.96,27.96,111.83,223.66,27.96,27.96,55.92,111.83
+1,unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit,float16,0.98,13.98,55.92,181.73,27.96,41.94,55.92,55.92
+2,unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit,int8,0.49,6.99,-0.00,-0.00,N/A,N/A,N/A,N/A
+3,unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit,int4,0.24,3.49,-0.00,-0.00,N/A,N/A,N/A,N/A
 ```
 # Quickstart
 - modify `model_list.clean.txt` to meet your case
