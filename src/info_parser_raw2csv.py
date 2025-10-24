@@ -6,15 +6,21 @@ bytes_per_gb = 1024 * 1024 * 1024
 
 def parse_line(line):
     sample = json.loads(line.replace("\'", "\""))
+    size_model =        sample['dtype_training_size']['model'] / bytes_per_gb 
+    size_gradients =    sample['dtype_training_size']['gradients'] / bytes_per_gb
+    size_optimizer =    sample['dtype_training_size']['optimizer'] / bytes_per_gb
+    size_step =         sample['dtype_training_size']['step'] / bytes_per_gb
     return [sample['model_name'], 
-                        sample['dtype'], 
-                        sample['dtype_largest_layer'] / bytes_per_gb, 
-                        sample['dtype_total_size'] / bytes_per_gb,
-                        sample['dtype_training_size']['model'] / bytes_per_gb if sample['dtype_training_size']['model'] >=0 else -1,
-                        sample['dtype_training_size']['optimizer'] / bytes_per_gb if sample['dtype_training_size']['optimizer'] >=0 else -1,
-                        sample['dtype_training_size']['gradients'] / bytes_per_gb if sample['dtype_training_size']['gradients'] >=0 else -1,
-                        sample['dtype_training_size']['step'] / bytes_per_gb if sample['dtype_training_size']['step'] >=0 else -1,
-                        ]
+            sample['dtype'], 
+            "{:.2f}".format(sample['dtype_largest_layer'] / bytes_per_gb), 
+            "{:.2f}".format(sample['dtype_total_size'] / bytes_per_gb),
+            "{:.2f}".format(max(size_model, size_gradients, size_optimizer, size_step)),
+            "{:.2f}".format(sum([size_model, size_gradients, size_optimizer, size_step])),
+            "{:.2f}".format(size_model) if size_model >=0 else "N/A",
+            "{:.2f}".format(size_gradients) if size_gradients >=0 else "N/A",
+            "{:.2f}".format(size_optimizer) if size_optimizer >=0 else "N/A",
+            "{:.2f}".format(size_step) if size_step >=0 else "N/A",
+            ]
 
 def main():
     parser = ArgumentParser()
@@ -25,12 +31,14 @@ def main():
 
     columns = ['model_name', 
                   'dtype', 
-                  'largest_layer(GB)', 
-                  'infer_model(GB)',
-                  'train_model(GB)',
-                  'train_optimizer(GB)',
-                  'train_gradients(GB)',
-                  'train_step(GB)',
+                  'Largest layer Size(GB)', 
+                  'Infer Model Size(GB)',
+                  'Train Ideal Peak Size with Adam(GB)',
+                  'Train Total Size w/o Offload(GB)',
+                  'Train Model Size(GB)',
+                  'Train Gradients(GB)',
+                  'Train Backward Optimizer(GB)',
+                  'Train Optimizer Step(GB)',
                   ]
     with open(args.raw_file, "r") as f:
         data_raw = f.readlines()
