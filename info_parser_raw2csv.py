@@ -17,8 +17,8 @@ def parse_line(line):
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("--raw-file", type=str, default="./model_info.raw.txt", help="path to raw model info file.")
-    parser.add_argument("--csv-file", type=str, default="./model_info.raw.csv", help="path to saving csv info file.")
+    parser.add_argument("--raw-file", type=str, default="./outputs/model_info.raw.txt", help="path to raw model info file.")
+    parser.add_argument("--csv-file", type=str, default="./outputs/model_info.raw.csv", help="path to saving csv info file.")
     args = parser.parse_args()
     print(args)
 
