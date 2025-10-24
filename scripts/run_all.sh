@@ -4,7 +4,7 @@ bash ./scripts/install_all.sh
 MODEL_LIST_FILE=${1:-'./model_list.clean.txt'}
 export LOG_ROOT=${LOG_ROOT:-'outputs/raw'}
 echo ">> collecting model info"
-# cat $MODEL_LIST_FILE | xargs -I {} bash ./scripts/model_info_collector.sh {}
+cat $MODEL_LIST_FILE | xargs -I {} bash ./scripts/model_info_collector.sh {}
 echo "done collecting model info"
 
 set +x 
