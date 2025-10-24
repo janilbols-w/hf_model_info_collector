@@ -1,6 +1,6 @@
 #!/bin/bash
 TAG=${1:-'Qwen/Qwen3-8B'}
-LOG_ROOT=${LOG_ROOT:-'./outputs/'}
+LOG_ROOT=${LOG_ROOT:-'./outputs/raw'}
 LOG_PATH=${LOG_ROOT}/$TAG
 LOG_FILE=$LOG_PATH/model_estimation.txt
 mkdir -p $LOG_PATH
